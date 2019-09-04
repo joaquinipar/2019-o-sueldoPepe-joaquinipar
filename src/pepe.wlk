@@ -1,56 +1,78 @@
+object sueldo {
+	
+	
+	method sueldoPersona(persona) = sueldoNeto.sueldo(persona)+ bonoResultados.porcentaje(persona) + bonoPresentismo.normal(persona)
+}
+
+
 object pepe {
-	var puesto = cadete
+	var categoria = cadete
 	var faltas = 0
-	method sueldo() {
-		return puesto.sueldoNeto()
-	}
+	//method sueldoNeto() = 
+	
 	method faltas() = faltas
 	
-	method cambiarPuesto(nuevoPuesto) {
-		puesto = nuevoPuesto
-	}
-	/*method cambiarSueldo(nuevoSueldo){
-		sueldo = nuevoSueldo
-	}*/
-}
 
-
-object gerente {
-	method sueldoNeto() { return 15000 }
-}
-
-object cadete {
-	method sueldoNeto() { return 20000 }
-}
-
-object bonoPorcentaje{
 	
-	method porcentaje (empleado)=empleado.sueldo()*1.10
 }
 
-/*
-object bono {
-	var bono = 0
-	method porcentaje (empleado){
+object sueldoNeto {
+	var sueldo
+	method sueldo(persona){
 		
-		bono = (empleado.sueldo() * 0.10)
+	if (persona.categoria() == gerente){
+		return 15000
 	}
-	method fijo(){
-		
-		bono = 800
+	if(persona.categoria() == cadete){
+		return 20000
+		}
 	}
 	
-	method presentismo (empleado){
+}
+
+
+object bonoResultados{
+	
+	method porcentaje(empleado)=empleado.sueldo()*0.10
+	method fijo()=800
+	method nulo()=0
+}
+
+object bonoPresentismo{
+	
+	method normal(empleado){
 		
 		if(empleado.faltas() == 0){
-			bono = 2000
+			
+			return 2000
 		}
 		if(empleado.faltas() == 1){
-			bono = 1000
+			
+			return 1000
 		}
-		else {
-			bono = 0
+		else{
+			return 0
 		}
 	}
-	method bonoAsignado(empleado)=bono
-}*/
+	method ajuste(empleado){
+		if(empleado.faltas() == 0){
+			
+			return 100
+		}
+		else{
+			return 0
+		}
+	
+	}
+	method demagogico(empleado){
+		
+		if(sueldoNeto.sueldo(empleado) < 18000){
+			return 500
+		}
+		else {
+			
+			return 300
+		}
+	}
+}
+
