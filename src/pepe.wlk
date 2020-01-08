@@ -1,46 +1,62 @@
-object sueldo {
+
+
+object gerente {
 	
+	method sueldo() = 15000
 	
-	method sueldoPersona(persona) = sueldoNeto.sueldo(persona)+ bonoResultados.porcentaje(persona) + bonoPresentismo.normal(persona)
 }
 
+object cadete {
+	
+			
+	method sueldo() = 20000
+		
+	
+	
+}
 
-object pepe {
+class Empleado {
 	var categoria = cadete
 	var faltas = 0
-	//method sueldoNeto() = 
+	var bonoPresentismo = normal 
+	var bonoResultado = fijo
 	
 	method faltas() = faltas
 	
-
+	method sueldoSinBonos () = categoria.sueldo()
+	
+	method sueldo() = categoria.sueldo() + bonoResultado.cantidad(self) + bonoPresentismo.cantidad(self)
+	
+	method cambiarPuesto(puesto) { categoria = puesto }
 	
 }
 
-object sueldoNeto {
-	var sueldo
-	method sueldo(persona){
-		
-	if (persona.categoria() == gerente){
-		return 15000
-	}
-	if(persona.categoria() == cadete){
-		return 20000
-		}
-	}
+const pepe = new Empleado (categoria= cadete, faltas= 0, bonoPresentismo = normal, bonoResultado = fijo)
+
+// Bono Resultado
+
+object porcentaje {
+	
+	method cantidad(empleado)=empleado.sueldoSinBonos()*0.10
 	
 }
 
-
-object bonoResultados{
+object fijo {
 	
-	method porcentaje(empleado)=empleado.sueldo()*0.10
-	method fijo()=800
-	method nulo()=0
+	method cantidad(empleado) = 800
+	
 }
 
-object bonoPresentismo{
+object nulo {
 	
-	method normal(empleado){
+	method cantidad(empleado) = 0
+} 
+
+// Bono Presentismo
+
+object normal {
+	
+	method cantidad(empleado){
 		
 		if(empleado.faltas() == 0){
 			
@@ -54,7 +70,12 @@ object bonoPresentismo{
 			return 0
 		}
 	}
-	method ajuste(empleado){
+	
+}
+
+object ajuste {
+	
+	method cantidad(empleado){
 		if(empleado.faltas() == 0){
 			
 			return 100
@@ -64,9 +85,14 @@ object bonoPresentismo{
 		}
 	
 	}
-	method demagogico(empleado){
+	
+}
+
+object demagogico {
+	
+	method cantidad(empleado){
 		
-		if(sueldoNeto.sueldo(empleado) < 18000){
+		if(empleado.categoria().sueldo() < 18000){
 			return 500
 		}
 		else {
@@ -74,5 +100,10 @@ object bonoPresentismo{
 			return 300
 		}
 	}
+	
 }
+
+
+
+
 
